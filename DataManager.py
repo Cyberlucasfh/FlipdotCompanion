@@ -8,20 +8,34 @@ class DataManager:
     curr_weather = "Kein Wetter"
     curr_time = "NoTime"
     changed = False
+    currentVariant = 1
 
     @staticmethod
-    def GetUhrzeit():
+    def GetTime():
         uhrzeit = datetime.now().strftime("%H:%M")
         return uhrzeit
 
     @staticmethod
-    def CheckUhrzeitChanged():
-        timenow = DataManager.GetUhrzeit()
+    def GetDate():
+        today = datetime.today().strftime("%d.%m.%Y")
+        return today
+
+    @staticmethod
+    def CheckTimeChanged():
+        timenow = DataManager.GetTime()
         if timenow == DataManager.curr_time:
             return False
         else:
             DataManager.curr_time = timenow
+            DataManager.changeVariant()
             return True
+
+    @staticmethod
+    def changeVariant():
+        if DataManager.currentVariant < 4:
+            DataManager.currentVariant += 1
+        elif DataManager.currentVariant == 4:
+            DataManager.currentVariant = 1
 
     @staticmethod
     def UpdateWeatherdata():

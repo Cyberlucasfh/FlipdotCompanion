@@ -16,9 +16,9 @@ def checkForAscii(string:str ) -> str:
         text = text.replace(char, ersatz)
     return text
 
-def berechne_paritybyte(daten: bytes) -> bytes:
+def calc_paritybyte(data: bytes) -> bytes:
     parity_byte = 0x7F
-    for byte in daten:
+    for byte in data:
         parity_byte ^= byte
     return bytes([parity_byte])
 
@@ -32,25 +32,25 @@ def calc_lenghtbyte(telegram: str):
         return "3"
 
 
-def sende_daten(zeile1: str, zeile2: str):
+def send_data(line1: str, line2: str):
     ser = serial.Serial(
         port='COM5',  # COMX for Win, /dev/ttyUSB0 for Raspi
         baudrate=1200,
-        bytesize=serial.SEVENBITS,  # 7 Datenbits
-        parity=serial.PARITY_EVEN,  # Gerade Parität
-        stopbits=serial.STOPBITS_TWO,  # 2 Stopbits
+        bytesize=serial.SEVENBITS,
+        parity=serial.PARITY_EVEN,
+        stopbits=serial.STOPBITS_TWO,
         timeout=1
     )
     if ser.isOpen():
         print("Comport offen")
-    cleanedLine1 = checkForAscii(zeile1)
-    cleanedLine2 = checkForAscii(zeile2)
+    cleanedLine1 = checkForAscii(line1)
+    cleanedLine2 = checkForAscii(line2)
     lenghtbyte = calc_lenghtbyte(cleanedLine1+cleanedLine2)
     #linie = b'l200\r'
-    daten = b'aA1'+lenghtbyte.encode('ascii')+b'A8'+cleanedLine1.encode('ascii')+b'\n'+cleanedLine2.encode('ascii')+b'\n\n              \r'
+    data = b'aA1'+lenghtbyte.encode('ascii')+b'A8'+cleanedLine1.encode('ascii')+b'\n'+cleanedLine2.encode('ascii')+b'\n\n              \r'
     #linientelegramm = linie + berechne_paritybyte(linie)
-    parity = berechne_paritybyte(daten)
-    telegram = daten+parity
+    parity = calc_paritybyte(data)
+    telegram = data+parity
 
     print(telegram)
 
