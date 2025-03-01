@@ -9,7 +9,7 @@ def minuteUpdates():
     time.sleep(5)
     while True:
         if(DataManager.changed or DataManager.CheckUhrzeitChanged()):
-            serialPortMessenger.sende_daten(str(DataManager.GetUhrzeit() + " " + DataManager.GetTemp()) + " Grad",
+            serialPortMessenger.sende_daten(DataManager.GetUhrzeit() + " " + str(DataManager.GetTemp()) + " Grad",
                                             DataManager.GetWeather())
         time.sleep(15)
 

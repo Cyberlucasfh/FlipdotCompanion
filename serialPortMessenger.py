@@ -34,7 +34,7 @@ def calc_lenghtbyte(telegram: str):
 
 def sende_daten(zeile1: str, zeile2: str):
     ser = serial.Serial(
-        port='COM4',  # Passe den COM-Port an
+        port='COM5',  # COMX for Win, /dev/ttyUSB0 for Raspi
         baudrate=1200,
         bytesize=serial.SEVENBITS,  # 7 Datenbits
         parity=serial.PARITY_EVEN,  # Gerade Parität
