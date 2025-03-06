@@ -5,7 +5,7 @@ import time
 
 DataManager.UpdateWeatherdata()
 
-
+#TODO: Jede zweite Minute evtl? 
 def minuteUpdates():
     time.sleep(5)
     while True:

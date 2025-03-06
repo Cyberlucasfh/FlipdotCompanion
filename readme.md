@@ -6,6 +6,9 @@
 Der Versuchsaufbau in welchem dieses Programm getestet wurde sieht wie folgt aus: 
 LAWO MAX16510-02.00, Verbunden mit einem USB-IBIS Wagenbus-Schnittstellenwandler (V1) an einen Raspberry Pi 3B
 
+### Packages für  Linux/Python
+* openmeteo-requests [Link](https://open-meteo.com/en/docs)
+
 ### Verbauter Wandler
 [Ibis Wandler](https://ibis-wandler.de)
 
@@ -34,4 +37,5 @@ aA14A8Takt1 Zeile 1<LF>Takt1 Zeile 2<LF><LF>Takt2 Zeile1<LF>Takt2 Zeile2<LF><LF>
 ```
 * aA = Datensatzkennung 
 * 1 = Adresse (1=Front, 2=Seite)
+* 4 = Längenbyte
 * A3 = Taktzeit

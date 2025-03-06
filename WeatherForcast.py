@@ -15,7 +15,7 @@ def downloadWeather():
   params = {
       "latitude": 53.6023417,
       "longitude": 11.4311637,
-      "current": ["temperature_2m", "weather_code"],
+      "current": ["temperature_2m", "weather_code","is_day"],
       "timezone": "Europe/Berlin"
   }
   responses = openmeteo.weather_api(url, params=params)
@@ -33,8 +33,10 @@ def downloadWeather():
 
   current_temperature_2m = current.Variables(0).Value()
   current_weather_code = current.Variables(1).Value()
+  current_is_day = current.Variables(2).Value()
 
-  current_weather_string = getWeatherString(current_weather_code)
+
+  current_weather_string = getWeatherString(current_weather_code, current_is_day)
   return {
     "temp" : current_temperature_2m,
     "weather" : current_weather_string
@@ -46,7 +48,7 @@ def downloadWeather():
   # print(f"Current weather_code {current_weather_code}")
 
 
-def getWeatherString(code: float) -> str:
+def getWeatherString(code: float, isDay: float) -> str:
   weatherCodes = {
     0: "Klarer Himmel",
     1: "Meist klar",
@@ -77,5 +79,11 @@ def getWeatherString(code: float) -> str:
     96: "Gewitter, Hagel",
     99: "Starkes Gewitter"
   }
+  value = weatherCodes.get(int(code), "Unbekannter Code")
 
-  return weatherCodes.get(int(code), "Unbekannter Code")
+  if isDay == 1.0:
+    match value:
+      case "Klarer Himmel": value = "Sonnig"
+      case "Meist klar": value = "Meist Sonnig"
+
+  return value
